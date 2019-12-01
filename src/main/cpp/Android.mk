@@ -26,7 +26,8 @@ LOCAL_SRC_FILES := \
     source/scale_any.cc         \
     source/scale_argb.cc        \
     source/scale_common.cc      \
-    source/video_common.cc
+    source/video_common.cc      \
+    ../../../build/generated/swig/cpp/libyuv.cc
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
     LOCAL_CFLAGS += -DLIBYUV_NEON

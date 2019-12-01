@@ -1,0 +1,56 @@
+apply plugin:'com.android.library'
+
+group = 'libyuv'
+version = '1.0.0'
+
+repositories {
+    google()
+    jcenter()
+}
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        minSdkVersion 22
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
+        }
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path "src/main/cpp/Android.mk"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+project.tasks.create("swig", SwigTask, { swig ->
+    swig.javaPackageName = "libyuv"
+    swig.inputDir = file("src/main/cpp/include")
+    swig.inputFile = file("src/main/swig/libyuv.i")
+
+    android.libraryVariants.all { variant ->
+        variant.registerJavaGeneratingTask(swig, swig.javaOutDir, swig.cppOutDir)
+    }
+})
