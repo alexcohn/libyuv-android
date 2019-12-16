@@ -72,3 +72,14 @@
 #ifdef HAS_MJPEG
 %include "../../swig/mjpegdecoder.i"
 #endif
+
+// Inject lib loader snippet
+%pragma(java) jniclasscode=%{
+static {
+    try {
+        System.loadLibrary("yuv");
+    } catch (UnsatisfiedLinkError e) {
+        System.err.println("Native code library failed to load. \n" + e);
+    }
+}
+%}
