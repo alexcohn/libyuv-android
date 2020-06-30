@@ -1,4 +1,6 @@
 apply plugin:'com.android.library'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
 
 group = 'libyuv'
 version = '1.0.0'
@@ -7,6 +9,30 @@ repositories {
     google()
     jcenter()
 }
+
+
+afterEvaluate {
+    publishing {
+        publications {
+            aar(MavenPublication) {
+                from components.release
+            }
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['aar']
+    pkg {
+        repo = 'libyuv-android'
+        name = 'libyuv-android'
+        vcsUrl = 'https://github.com/balazsbanyai/libyuv-android'
+        licenses = ['Apache-2.0']
+    }
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
