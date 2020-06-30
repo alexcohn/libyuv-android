@@ -3,5 +3,6 @@ libyuv-android
 
 Build Google libyuv with NDK for Android
 
-#Usage
-ndk-build -j8
+# Usage
+*build.gradle*
+`implementation 'libyuv:libyuv-android:1.0.0'`
