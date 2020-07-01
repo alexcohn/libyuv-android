@@ -7,4 +7,4 @@ The library contains a Java wrapper generated with _swig_, to allow usage from m
 
 # Usage
 
-`implementation 'libyuv:libyuv-android:1.0.0'`
+`implementation 'com.balazsbanyai.libyuv:libyuv-android:1.0.0'`
